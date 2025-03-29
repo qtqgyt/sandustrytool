@@ -1,12 +1,14 @@
 #!python
-from loguru import logger
-from config import config
 import sys
 import tkinter as tk
 from tkinter import filedialog
 
+from loguru import logger
+
+from config import config
 from map import Map
 from window import window
+
 
 @logger.catch
 def main():

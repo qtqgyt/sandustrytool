@@ -1,4 +1,4 @@
-name: Build Release Stable
+name: Release
 
 on:
   push:
@@ -47,11 +47,9 @@ jobs:
           # Extract changelog from commit (lines after "Changelog:")
           CHANGELOG=$(echo "$COMMIT_MSG" | sed -n '/Changelog:/,$p' | sed '1d')
           if [ -z "$CHANGELOG" ]; then
-            echo "No changelog found in commit message. Please add a changelog and try again."
+            echo "No changelog found in commit message."
             exit 1
           fi
-
-          echo "Finished!"
 
           # Get latest release version from GitHub API
           LATEST=$(curl -s https://api.github.com/repos/${GITHUB_REPOSITORY}/releases/latest | jq -r .tag_name)
@@ -91,7 +89,7 @@ jobs:
         run: pip install -r requirements.txt pyinstaller
 
       - name: Build executable
-        run: pyinstaller main.py -F -i image.ico
+        run: pyinstaller main.py -F --disable-windowed-traceback -i image.ico
 
       - name: Set artifact path
         id: set_path
@@ -101,10 +99,9 @@ jobs:
             echo "artifact=dist/main.exe" >> $GITHUB_OUTPUT
           else
             echo "artifact=dist/main" >> $GITHUB_OUTPUT
-          fi
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: ${{ matrix.os }}-SandustrySaveViewer
           path: ${{ steps.set_path.outputs.artifact }}
@@ -114,7 +111,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download all build artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v3
         with:
           path: release_artifacts
 
@@ -133,8 +130,19 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: release_artifacts/ubuntu-latest-SandustrySaveViewer/main
+          asset_path: release_artifacts/ubuntu-latest-SandustrySaveViewer/dist/main
           asset_name: main-linux
+          asset_content_type: application/octet-stream
+
+      - name: Upload macOS Executable
+        if: ${{ always() }}
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: release_artifacts/macos-latest-SandustrySaveViewer/dist/main
+          asset_name: main-macos
           asset_content_type: application/octet-stream
 
       - name: Upload Windows Executable
@@ -144,17 +152,19 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: release_artifacts/windows-latest-SandustrySaveViewer/main.exe
+          asset_path: release_artifacts/windows-latest-SandustrySaveViewer/dist/main.exe
           asset_name: main-windows.exe
           asset_content_type: application/octet-stream
 
-      - name: Upload MacOS Executable
-        if: ${{ always() }}
+      - name: Zip artifacts
+        run: zip -r release.zip release_artifacts
+
+      - name: Upload Release Asset
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: release_artifacts/macos-latest-SandustrySaveViewer/main
-          asset_name: main-macos
-          asset_content_type: application/octet-stream
+          asset_path: all.zip
+          asset_name: all.zip
+          asset_content_type: application/zip

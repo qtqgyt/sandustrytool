@@ -12,8 +12,7 @@ from map import Map
 
 class window:
     def __init__(self, title: str, map: Map) -> None:
-        logger.remove()
-        logger.add(sys.stderr, format="{time} {level} {message}", level=config.log_level)
+        self.map = map
         self.zoom_level = config.zoom_level
         self.window_width, self.window_height = config.window_x, config.window_y
 
@@ -38,7 +37,7 @@ class window:
         # Pre-create a font for HUD text
         self.font = pygame.font.SysFont(None, 24)
 
-        self.scroll_speed = 10
+        self.scroll_speed = config.scroll_speed
         self.camera_x = (self.tilemap_width - self.window_width) // 2
         self.camera_y = (self.tilemap_height - self.window_height) // 2
         self._calculate_camera_borders()

@@ -32,7 +32,7 @@ MANIFEST
 *.manifest
 *.spec
 
-# Installer logs - get rid of
+# Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
 
@@ -173,3 +173,5 @@ cython_debug/
 *.save
 
 history.json.bak
+
+config.json

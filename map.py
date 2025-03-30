@@ -14,7 +14,7 @@ class TileInfo:
         return f"Tile: {self.id} - {self.name}"
 
 
-default_tile = TileInfo(-1, "Unknown", "#FFC0CB")
+
 
 tiles_data = config.tiles
 tile_colors = {int(k): TileInfo(**v) for k, v in tiles_data.items()}
@@ -25,7 +25,6 @@ class Map:
             with open(path, "r", encoding="utf-8", errors="replace") as file:
                 contents = file.read()
             objects = [json.loads(s.strip()) for s in contents.splitlines()]
-            # Extract gold, fluxite, and artifacts from the first JSON segment at path resources.gold, fluxite, artifacts
             resources = objects[0].get("resources", {}) if objects else {}
             self.gold = resources.get("gold", 0)
             self.fluxite = resources.get("fluxite", 0)
@@ -49,6 +48,7 @@ class Map:
             raise e
 
     def get_tile_info(self, tile) -> TileInfo:
+        default_tile = TileInfo(tile, "Unknown", "#FFC0CB")
         if isinstance(tile, int):
             return tile_colors.get(tile, default_tile)
         if isinstance(tile, dict) and "element" in tile and "type" in tile["element"]:

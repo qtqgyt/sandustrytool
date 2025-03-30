@@ -14,12 +14,11 @@ parser.add_argument('path', type=str, help='Path to the save file')
 parser.add_argument('--resetconfig', action='store_true', help='Reset the config file to defaults')
 args = parser.parse_args()
 
-if args.resetconfig == True:
-    config.reset_config()
-    logger.info("Config file reset to defaults.")
-
 @logger.catch
 def main():
+    if args.resetconfig:
+        config.reset_config()
+        logger.info("Config file reset to defaults.")
     if args.path:
         json_path = args.path
     else:

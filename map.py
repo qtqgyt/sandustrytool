@@ -1,5 +1,6 @@
 import json
 from config import config
+from loguru import logger
 
 
 class TileInfo:

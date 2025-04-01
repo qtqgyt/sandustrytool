@@ -187,7 +187,7 @@ class window:
 
         self.tilemap_surface = pygame.Surface((self.tilemap_width, self.tilemap_height))
         for y, row in enumerate(self.map.world):
-            self.draw_progress_bar((y+1) / len(self.map.world), "Loading tilemap...")
+            # self.draw_progress_bar((y+1) / len(self.map.world), "Loading tilemap...")
             for x, tile in enumerate(row):
                 if isinstance(tile, list):
                     tile = tile[0]

@@ -1,5 +1,4 @@
-#### Please report bugs either in github issues, or at my discord (dvorakkkkkkk)
-[![Build Release](https://github.com/qtqgyt/sandustrytool/actions/workflows/releases.yml/badge.svg)](https://github.com/qtqgyt/sandustrytool//actions/workflows/releases.yml)
+[![Build Release](https://github.com/qtqgyt/sandustrytool/actions/workflows/releases.yml/badge.svg)](https://github.com/qtqgyt/sandustrytool/actions/workflows/releases.yml)
 > [!IMPORTANT]
 > Only compatible with version 0.0.5 save files.
 ## Downloads

@@ -84,6 +84,45 @@ class window:
         self.screen.blit(loading_text, text_rect)
         pygame.display.flip()
 
+#################################################################### I'm not gonna box it in, takes too long
+#   def draw_progress_bar(self, progress: float, text: str = "") -> None:
+#       """
+#       Draw a progress bar with optional text
+#       
+#       Args:
+#           progress (float): Progress value between 0 and 1
+#           text (str, optional): Text to display above progress bar.
+#       """
+#       progress = max(0, min(1, progress))
+#       screen_width = self.screen.get_width()
+#       screen_height = self.screen.get_height()
+#       
+#       # Create background once
+#       background = pygame.Surface(self.screen.get_size(), pygame.SRCALPHA)
+#       pygame.draw.rect(background, (0, 0, 0, 128), background.get_rect())
+#       self.screen.blit(background, (0, 0))
+#       
+#       # Progress bar setup
+#       bar_width = screen_width // 2
+#       bar_height = 30
+#       bar_x = (screen_width - bar_width) // 2
+#       bar_y = (screen_height - bar_height) // 2
+#       
+#       # Draw text
+#       if text:
+#           text_surface = self.font.render(text, True, (255, 255, 255))
+#           text_rect = text_surface.get_rect(
+#               centerx=screen_width // 2,
+#               bottom=bar_y - 10
+#           )
+#           self.screen.blit(text_surface, text_rect)
+#       
+#       # Draw bar in one go
+#       pygame.draw.rect(self.screen, (128, 128, 128), (bar_x, bar_y, bar_width, bar_height), 2)
+#       pygame.draw.rect(self.screen, (0, 255, 0), (bar_x, bar_y, int(bar_width * progress), bar_height))
+#       pygame.display.flip()
+###########################################################################################################
+
     def draw_resources(self) -> pygame.Surface:
         gold_text = self.font.render(f"Gold: {self.map.gold}", True, (255, 215, 0))
         fluxite_text = self.font.render(f"Fluxite: {self.map.fluxite}", True, (175, 0, 224))
@@ -148,6 +187,7 @@ class window:
 
         self.tilemap_surface = pygame.Surface((self.tilemap_width, self.tilemap_height))
         for y, row in enumerate(self.map.world):
+            self.draw_progress_bar((y+1) / len(self.map.world), "Loading tilemap...")
             for x, tile in enumerate(row):
                 if isinstance(tile, list):
                     tile = tile[0]

@@ -2,7 +2,6 @@ import json
 from config import config
 from loguru import logger
 
-
 class TileInfo:
     def __init__(self, id: int, name: str, hex_code: str):
         self.id = id
@@ -12,9 +11,6 @@ class TileInfo:
 
     def __str__(self) -> str:
         return f"Tile: {self.id} - {self.name}"
-
-
-
 
 tiles_data = config.tiles
 tile_colors = {int(k): TileInfo(**v) for k, v in tiles_data.items()}

@@ -20,16 +20,16 @@ def main():
         config.reset_config()
         logger.info("Config file reset to defaults.")
     if args.path:
-        json_path = args.path
+        path = args.path
     else:
         root = tk.Tk()
         root.withdraw()  # Hide the main window
-        json_path = filedialog.askopenfilename(title="Select save file", filetypes=[("Save Files", "*.save")])
+        path = filedialog.askopenfilename(title="Select save file", filetypes=[("Save Files", "*.save")])
         root.destroy()
-    if not json_path:
+    if not path:
         logger.info("No file selected.")
         return
-    window("Sandustry Save Visualizer", Map(json_path)).render()
+    window("Sandustry Save Visualizer", Map(path)).render()
 
 
 if __name__ == "__main__":

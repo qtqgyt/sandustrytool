@@ -14,7 +14,6 @@ from map import Map
 
 MAX_ZOOM = config.max_zoom
 
-
 class window:
     def __init__(self, title: str, map: Map) -> None:
         self.map = map

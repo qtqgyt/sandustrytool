@@ -84,7 +84,6 @@ class window:
         self.screen.blit(loading_text, text_rect)
         pygame.display.flip()
 
-#################################################################### I'm not gonna box it in, takes too long
 #   def draw_progress_bar(self, progress: float, text: str = "") -> None:
 #       """
 #       Draw a progress bar with optional text
@@ -121,7 +120,6 @@ class window:
 #       pygame.draw.rect(self.screen, (128, 128, 128), (bar_x, bar_y, bar_width, bar_height), 2)
 #       pygame.draw.rect(self.screen, (0, 255, 0), (bar_x, bar_y, int(bar_width * progress), bar_height))
 #       pygame.display.flip()
-###########################################################################################################
 
     def draw_resources(self) -> pygame.Surface:
         gold_text = self.font.render(f"Gold: {self.map.gold}", True, (255, 215, 0))
@@ -142,38 +140,36 @@ class window:
         )
         return resources_hud
 
-###########################################################################################################################################
-#    def draw_hotbar(self):                                                                                                               #
-#        # Hotbar                                                                                                                         #
-#        slot_width = 60                                                                                                                  #
-#        margin = 10                                                                                                                      #
-#        hotbar_height = slot_width + (margin * 2)                                                                                        #
-#        screen_width = self.screen.get_width()                                                                                           #
-#        hotbar_y = self.screen.get_height() - hotbar_height                                                                              #
-#                                                                                                                                         #
-#        # Calculate actual hotbar background width to only cover slots                                                                   #
-#        TOTAL_SLOTS = 9                                                                                                                  #
-#        total_width = TOTAL_SLOTS * slot_width + (TOTAL_SLOTS + 1) * margin                                                              #
-#        start_x = (screen_width - total_width) // 2                                                                                      #
-#                                                                                                                                         #
-#        # Create hotbar background surface with transparency                                                                             #
-#        hotbar_surface = pygame.Surface((total_width, hotbar_height), pygame.SRCALPHA)                                                   #
-#        # Draw rounded rectangle for hotbar background                                                                                   #
-#        pygame.draw.rect(hotbar_surface, (50, 50, 50, 128), (0, 0, total_width, hotbar_height), border_radius=10)  # Add rounded corners #
-#                                                                                                                                         #
-#        # Blit hotbar background at calculated position                                                                                  #
-#        self.screen.blit(hotbar_surface, (start_x, hotbar_y))                                                                            #
-#                                                                                                                                         #
-#        for idx in range(TOTAL_SLOTS):                                                                                                   #
-#            slot_x = start_x + margin + idx * (slot_width + margin)                                                                      #
-#            color = (255, 215, 0) if idx == self.map.active_slot else (100, 100, 100)                                                    #
-#            pygame.draw.rect(self.screen, color, (slot_x, hotbar_y + margin, slot_width, slot_width), 2)                                 #
-#            text_surface = self.font.render(str(idx), True, (255, 255, 255))                                                             #
-#            # Position text in top-left corner with small offset                                                                         #
-#            text_x = slot_x + 4                                                                                                          #
-#            text_y = hotbar_y + margin + 4                                                                                               #
-#            self.screen.blit(text_surface, (text_x, text_y))                                                                             #
-###########################################################################################################################################
+#    def draw_hotbar(self):                                                                                                              
+#        # Hotbar                                                                                                                        
+#        slot_width = 60                                                                                                                 
+#        margin = 10                                                                                                                     
+#        hotbar_height = slot_width + (margin * 2)                                                                                       
+#        screen_width = self.screen.get_width()                                                                                          
+#        hotbar_y = self.screen.get_height() - hotbar_height                                                                             
+#                                                                                                                                        
+#        # Calculate actual hotbar background width to only cover slots                                                                  
+#        TOTAL_SLOTS = 9                                                                                                                 
+#        total_width = TOTAL_SLOTS * slot_width + (TOTAL_SLOTS + 1) * margin                                                             
+#        start_x = (screen_width - total_width) // 2                                                                                     
+#                                                                                                                                        
+#        # Create hotbar background surface with transparency                                                                            
+#        hotbar_surface = pygame.Surface((total_width, hotbar_height), pygame.SRCALPHA)                                                  
+#        # Draw rounded rectangle for hotbar background                                                                                  
+#        pygame.draw.rect(hotbar_surface, (50, 50, 50, 128), (0, 0, total_width, hotbar_height), border_radius=10)  # Add rounded corners
+#                                                                                                                                        
+#        # Blit hotbar background at calculated position                                                                                 
+#        self.screen.blit(hotbar_surface, (start_x, hotbar_y))                                                                           
+#                                                                                                                                        
+#        for idx in range(TOTAL_SLOTS):                                                                                                  
+#            slot_x = start_x + margin + idx * (slot_width + margin)                                                                     
+#            color = (255, 215, 0) if idx == self.map.active_slot else (100, 100, 100)                                                   
+#            pygame.draw.rect(self.screen, color, (slot_x, hotbar_y + margin, slot_width, slot_width), 2)                                
+#            text_surface = self.font.render(str(idx), True, (255, 255, 255))                                                            
+#            # Position text in top-left corner with small offset                                                                        
+#            text_x = slot_x + 4                                                                                                         
+#            text_y = hotbar_y + margin + 4                                                                                              
+#            self.screen.blit(text_surface, (text_x, text_y))                                                                            
 
     def draw_new_tilemap(self) -> None:
         self.draw_loading_overlay()

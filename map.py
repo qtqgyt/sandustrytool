@@ -18,6 +18,7 @@ class TileInfo:
 
 tiles_data = config.tiles
 tile_colors = {int(k): TileInfo(**v) for k, v in tiles_data.items()}
+DEFAULT_TILE = TileInfo(-1, "Unknown", "#FFC0CB")
 
 class Map:
     def __init__(self, path) -> None:
@@ -48,9 +49,23 @@ class Map:
             raise e
 
     def get_tile_info(self, tile) -> TileInfo:
-        default_tile = TileInfo(tile, "Unknown", "#FFC0CB")
+        _tile_colors = tile_colors
         if isinstance(tile, int):
-            return tile_colors.get(tile, default_tile)
-        if isinstance(tile, dict) and "element" in tile and "type" in tile["element"]:
-            return tile_colors.get(tile["element"]["type"] + 100, default_tile)
-        return default_tile
+            return _tile_colors.get(tile, DEFAULT_TILE)
+        if isinstance(tile, dict):
+            elem = tile.get("element")
+            if isinstance(elem, dict) and "type" in elem:
+                return _tile_colors.get(elem["type"] + 100, DEFAULT_TILE)
+        return DEFAULT_TILE
+
+    def get_tile_color(self, tile):
+        _tile_colors = tile_colors
+        if isinstance(tile, int):
+            ti = _tile_colors.get(tile)
+            return ti.color if ti is not None else DEFAULT_TILE.color
+        if isinstance(tile, dict):
+            elem = tile.get("element")
+            if isinstance(elem, dict) and "type" in elem:
+                ti = _tile_colors.get(elem["type"] + 100)
+                return ti.color if ti is not None else DEFAULT_TILE.color
+        return DEFAULT_TILE.color
